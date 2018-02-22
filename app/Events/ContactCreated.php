@@ -5,34 +5,36 @@ namespace App\Events;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ChatMessageReceived implements ShouldBroadcast
+class ContactCreated
 {
-    use InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
     /**
      * @var array
      */
-    public $data;
+    public $contact;
 
     /**
      * Create a new event instance.
      *
-     * @param mixed $message
+     * @param array $contact
      */
-    public function __construct(array $message)
+    public function __construct(array $contact)
     {
-        $this->data = $message;
+        $this->contact = $contact;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @return Channel|array
+     * @return \Illuminate\Broadcasting\Channel|array
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat-channel');
+        return new PrivateChannel('contact-channel');
     }
 }

@@ -21,6 +21,7 @@ class CreateMessageTable extends Migration
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
 
             $table->string('text', 160);
+            $table->boolean('my_message')->default(false);
         });
     }
 

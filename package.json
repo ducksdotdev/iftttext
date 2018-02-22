@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "ioredis": "^3.2.2",
-        "socket.io": "^2.0.4"
+        "socket.io": "^2.0.4",
+        "vue-resource": "^1.4.0"
     }
 }

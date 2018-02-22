@@ -12,5 +12,4 @@
 */
 
 Route::get('/', 'PageController@index')->name('home');
-Route::post('send', 'MessageController@post')->name('send_message');
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

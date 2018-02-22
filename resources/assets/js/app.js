@@ -1,37 +1,28 @@
+import bus from "./bus";
+import ContactList from "./components/ContactList";
+
 window.Vue = require('vue');
+Vue.use(require('vue-resource'));
 
 const socket_port = 3000;
 const socket_host = 'http://127.0.0.1';
-const socket_channel = 'private-chat-channel';
 const socket = io(socket_host + ":" + socket_port);
 
-new Vue({
+const app = new Vue({
   el: '#app',
+  components: {ContactList},
   data: {
     message: '',
-    people: [],
+    active: null,
     messages: [],
-    active: null
+    messageHistory: BladeData.messages,
   },
-  mounted: function () {
+  mounted() {
+    bus.$on('active', this.setActive);
     this.$nextTick(function () {
-      console.log("Setting socket on " + socket_host + ":" + socket_port + " with channel " + socket_channel + "...");
-      socket.on(socket_channel, function (event) {
+      socket.on('private-chat-channel', function (event) {
         const data = event.data;
-        console.log(data);
-        let contact = {
-          name: data.contactName,
-          number: data.fromNumber
-        };
-
-        let personExists = false;
-        this.people.forEach(function (data) {
-          if (data.number === contact.number) personExists = true;
-        });
-
-        if (!personExists) this.people.push(contact);
-        if (!this.active) this.active = contact;
-        if (contact.number === this.active.number) {
+        if (this.active && this.active.id === this.data.contact_id) {
           this.messages.push(data);
         }
 
@@ -46,9 +37,13 @@ new Vue({
     send: function () {
       this.$http.post('/send', {
         text: this.message,
+        number: this.active.number,
         _token: this._token
       });
       this.message = '';
+    },
+    setActive(contact) {
+      this.active = contact;
     }
   }
 });

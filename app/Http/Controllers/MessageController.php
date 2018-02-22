@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\ChatMessageReceived;
+use App\Models\Contact;
 use App\Models\Message;
 use Illuminate\Filesystem\Cache;
 use Illuminate\Http\Request;
@@ -14,22 +15,17 @@ class MessageController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function post(Request $request)
+    public function receive(Request $request)
     {
-        $message = new Message($request->all());
-        event(new ChatMessageReceived($message));
+        $contact = Contact::firstOrNew(['phone' => $request->get('phone')]);
+        if ($request->has('name')) $contact->name = $request->get('name');
+        $contact->save();
+
+        Message::create([
+            'contact_id' => $contact->id,
+            'text' => $request->get('text')
+        ]);
+
         return response()->json(['status' => 'success']);
-    }
-
-    public function cachePush(Message $message)
-    {
-        $collection = Cache::tags(['messages'])->get($message->getData()->number);
-        $collection->push($message);
-        Cache::tags('messages')->put($message->getData()->number, $message);
-    }
-
-    public function get($number)
-    {
-        return Cache::tags('messages')->get($number)->toJson();
     }
 }

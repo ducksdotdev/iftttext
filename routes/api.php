@@ -13,5 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('messages/{number}', 'MessageController@get');
-Route::post('sms', 'MessageController@post');
+Route::post('receive', 'MessageController@post');

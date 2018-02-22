@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Contact;
+use App\Models\Message;
+use JavaScript;
 
 class PageController extends Controller
 {
     public function index()
     {
+        JavaScript::put([
+            'messages' => Message::all(),
+            'contacts' => Contact::all()
+        ]);
         return view('welcome');
     }
 }

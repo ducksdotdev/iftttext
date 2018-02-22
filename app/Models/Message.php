@@ -2,41 +2,27 @@
 
 namespace App\Models;
 
+use App\Events\ChatMessageReceived;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class Message
+class Message extends Model
 {
+    protected $fillable = ['text', 'contact_id'];
 
-    private $contactName;
-    private $text;
-    private $occurredAt;
-    private $fromNumber;
-
-    public function __construct($data)
+    public function contact()
     {
-        $this->contactName = $data['contactName'] ?? '';
-        $this->text = $data['text'] ?? '';
-        $this->occurredAt = $data['occurredAt'] ?? Carbon::now();
-        $this->fromNumber = $data['fromNumber'] ?? '';
+        return $this->belongsTo(Contact::class);
     }
 
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getData(): Collection
+    protected static function boot()
     {
-        return collect([
-            "contactName" => $this->contactName,
-            "text" => $this->text,
-            "occurredAt" => $this->occurredAt,
-            "fromNumber" => $this->fromNumber,
-        ]);
-    }
+        parent::boot();
 
-    public function json()
-    {
-        return $this->getData()->toJson();
+        static::created(function ($model) {
+            event(new ChatMessageReceived($model->toArray()));
+        });
     }
 
 }

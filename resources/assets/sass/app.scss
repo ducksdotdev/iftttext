@@ -3,7 +3,7 @@ $green: #86BB71;
 $blue: #94C2ED;
 $orange: #E38968;
 $gray: #92959E;
-$people-list-width: 260px;
+$contact-list-width: 260px;
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -15,143 +15,85 @@ html, body {
   height: 100%;
 }
 body {
-  font: 14px/20px "Lato", Arial, sans-serif;
+  font: 18px "Lato", Arial, sans-serif;
   color: white;
   background: #444753;
+  overflow: hidden;
 }
-.people-list {
-  width: $people-list-width;
+.wrapper {
+  display: flex;
+}
+.contact-list {
+  width: $contact-list-width;
   float: left;
+  height: 100%;
 
-  input {
-    border-radius: 3px;
-    border: none;
-    padding: 14px;
-    color: white;
-    background: #6A6C75;
-    width: 90%;
-    font-size: 14px;
-  }
-
-  ul {
+  .contact {
+    cursor: pointer;
     padding: 20px;
-    li {
-      padding-bottom: 20px;
+    & + .contact { border-top: 1px solid rgba(0, 0, 0, 0.08);}
+    span { display: block;
+      &.name {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      &.phone {
+        color: $gray;
+        font-size: .875rem;
+      }
     }
   }
-
-  img {
-    float: left;
-  }
-
-  .about {
-    float: left;
-    margin-top: 8px;
-  }
-
-  .about {
-    padding-left: 8px;
-  }
-
-  .status {
-    color: $gray;
-  }
-
 }
 .chat {
-  float: left;
+  max-height: 100%;
   background: #F2F5F8;
   color: #434651;
-  width: calc(100% - #{$people-list-width});
-
-  .chat-header {
-    padding: 20px;
+  width: calc(100% - #{$contact-list-width});
+  .chat-with {
+    height: 60px;
+    padding: 20px 30px;
     border-bottom: 2px solid white;
-
-    img {
-      float: left;
-    }
-
-    .chat-about {
-      float: left;
-      padding-left: 10px;
-      margin-top: 6px;
-    }
-
-    .chat-with {
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .chat-num-messages {
-      color: $gray;
-    }
-
-    .fa-star {
-      float: right;
-      color: #D8DADF;
-      font-size: 20px;
-      margin-top: 12px;
-    }
+    margin-top: 6px;
+    font-weight: bold;
+    font-size: 16px;
   }
-
   .chat-history {
     padding: 30px 30px 20px;
     border-bottom: 2px solid white;
+    height: calc(100% - 60px - 160px);
     overflow-y: scroll;
-
-    .message-data {
-      margin-bottom: 15px;
-    }
-
-    .message-data-time {
-      color: lighten($gray, 8%);
-      padding-left: 6px;
-    }
-
     .message {
-      color: white;
-      padding: 18px 20px;
-      line-height: 26px;
-      font-size: 16px;
-      border-radius: 7px;
-      margin-bottom: 30px;
-      width: 90%;
-      position: relative;
-
-      &:after {
-        bottom: 100%;
-        left: 7%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-bottom-color: $green;
-        border-width: 10px;
-        margin-left: -10px;
+      clear: both;
+      max-width: 66%;
+      .time {
+        margin-bottom: 15px;
+        color: lighten($gray, 8%);
+        padding-left: 6px;
+        font-size: .5rem;
+      }
+      &.my-message {
+        float: right;
+        .time, .text { text-align: right; }
+        .text {
+          background: $blue;
+        }
+      }
+      .text {
+        color: white;
+        padding: 18px 20px;
+        line-height: 26px;
+        font-size: 16px;
+        border-radius: 7px;
+        margin-bottom: 30px;
+        width: auto;
+        position: relative;
+        background: $green;
       }
     }
-
-    .my-message {
-      background: $green;
-    }
-
-    .other-message {
-      background: $blue;
-
-      &:after {
-        border-bottom-color: $blue;
-        left: 93%;
-      }
-    }
-
   }
-
   .chat-message {
     padding: 30px;
-
+    height: 160px;
     textarea {
       width: 100%;
       border: none;
@@ -161,7 +103,6 @@ body {
       border-radius: 5px;
       resize: none;
     }
-
     .fa-file-o, .fa-file-image-o {
       font-size: 16px;
       color: gray;
@@ -205,13 +146,5 @@ body {
 }
 .float-right {
   float: right;
-}
-.clearfix:after {
-  visibility: hidden;
-  display: block;
-  font-size: 0;
-  content: " ";
-  clear: both;
-  height: 0;
 }
 
