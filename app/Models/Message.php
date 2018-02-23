@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class Message extends Model
 {
-    protected $fillable = ['text', 'contact_id'];
+    protected $fillable = ['text', 'contact_id', 'my_message'];
 
     public function contact()
     {

@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 var socket_port = process.env.SOCKET_PORT;
-var socket_channel = 'private-chat-channel';
+var socket_channel = ['private-chat-channel', 'private-contact-channel'];
 
 var server = require('http').Server();
 var io = require('socket.io')(server);

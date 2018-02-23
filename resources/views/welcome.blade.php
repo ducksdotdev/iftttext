@@ -11,7 +11,7 @@
 <div class="wrapper" id="app">
     <contact-list :active="active"></contact-list>
     <div class="chat" v-if="active">
-        <div class="chat-with">@{{ active.name }} (@{{ active.phone }})</div>
+        <div class="chat-with">@{{ active.name ? active.name : 'Unknown Number' }} (@{{ active.phone }})</div>
         <div class="chat-history">
             <div class="message" v-for="message in messages" v-bind:class="{'my-message': message.my_message}">
                 <div class="time">@{{ message.created_at }}</div>
@@ -21,7 +21,7 @@
             </div>
         </div>
         <form class="chat-message" v-on:submit.prevent="send">
-            <textarea v-model="message" placeholder="Type your message" rows="3"></textarea>
+            <textarea v-model="message" placeholder="Type your message" v-on:keyup.enter="send"></textarea>
             <i class="fa fa-file-o"></i><i class="fa fa-file-image-o"></i>
             <button>Send</button>
         </form>

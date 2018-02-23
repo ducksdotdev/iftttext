@@ -22,28 +22,34 @@ const app = new Vue({
     this.$nextTick(function () {
       socket.on('private-chat-channel', function (event) {
         const data = event.data;
-        if (this.active && this.active.id === this.data.contact_id) {
+        this.messageHistory.push(data);
+        if (this.active && this.active.id === data.contact_id) {
           this.messages.push(data);
+          this.$nextTick(function () {
+            const container = this.$el.querySelector(".chat-history");
+            container.scrollTop = container.scrollHeight;
+          });
         }
-
-        this.$nextTick(function () {
-          const container = this.$el.querySelector(".chat");
-          container.scrollTop = container.scrollHeight;
-        });
+      }.bind(this));
+      socket.on('private-contact-channel', function (event) {
+        const contact = event.contact;
+        bus.$emit('newContact', contact);
       }.bind(this));
     });
   },
   methods: {
     send: function () {
-      this.$http.post('/send', {
+      this.$http.post('/api/send', {
         text: this.message,
-        number: this.active.number,
-        _token: this._token
+        phone: this.active.phone
       });
       this.message = '';
     },
     setActive(contact) {
       this.active = contact;
+      this.messages = this.messageHistory.filter(function (message) {
+        return message.contact_id === contact.id;
+      });
     }
   }
 });

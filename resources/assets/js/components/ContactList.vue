@@ -6,6 +6,7 @@
 
 <script>
   import Contact from "./Contact";
+  import bus from "../bus";
 
   export default {
     components: {Contact},
@@ -20,9 +21,20 @@
         required: false
       }
     },
+    mounted() {
+      bus.$on('newContact', this.addContact);
+    },
     methods: {
       isActive(contact) {
         return this.active && this.active.id === contact.id;
+      },
+      addContact(contact) {
+        const check = this.contacts.filter(function (item) {
+          return item.id === contact.id;
+        });
+        if (check.length === 0) {
+          this.contacts.push(contact);
+        }
       }
     }
   }
