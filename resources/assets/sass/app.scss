@@ -45,6 +45,7 @@ body {
     }
     &.phone {
       font-size: .875rem;
+      letter-spacing: 1px;
     }
   }
 }
@@ -53,7 +54,7 @@ body {
   color: rgba(255, 255, 255, .95);
   width: calc(100% - #{$contact-list-width});
   .contact{
-    cursor: none;
+    cursor: default;
     background: #424242;
   }
   .history {
@@ -105,9 +106,9 @@ body {
     }
     button {
       position: absolute;
-      top: 18px;
-      background: transparent;
+      top: calc(50% - 27.5px);
       right: 20px;
+      background: transparent;
       color: $orange;
       border-radius: 5px;
       font-size: 1rem;

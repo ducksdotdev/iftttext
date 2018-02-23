@@ -25,7 +25,10 @@ const app = new Vue({
         this.messageHistory.push(data);
         if (this.active && this.active.id === data.contact_id) {
           this.messages.push(data);
-          this.scrollBottom();
+          this.$nextTick(function () {
+            let container = document.getElementsByClassName("history")[0];
+            container.scrollTop = container.scrollHeight;
+          });
         }
       }.bind(this));
       socket.on('private-contact-channel', function (event) {
@@ -36,10 +39,12 @@ const app = new Vue({
   },
   methods: {
     send: function () {
-      this.$http.post('/api/send', {
-        text: this.message,
-        number: this.active.phone
-      });
+      if (this.message) {
+        this.$http.post('/api/send', {
+          text: this.message,
+          number: this.active.phone
+        });
+      }
       this.message = '';
     },
     setActive(contact) {
@@ -47,12 +52,6 @@ const app = new Vue({
       this.messages = this.messageHistory.filter(function (message) {
         return message.contact_id === contact.id;
       });
-      this.scrollBottom();
-    },
-    scrollBottom() {
-      console.log("Trying to scroll");
-      const container = document.getElementsByClassName("chat-history")[0];
-      container.scrollTop = container.scrollHeight;
     }
   }
 });

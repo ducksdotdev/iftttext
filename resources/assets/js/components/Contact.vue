@@ -7,6 +7,7 @@
 
 <script>
   import bus from "../bus"
+
   export default {
     props: {
       contact: {
@@ -17,6 +18,10 @@
     methods: {
       setActive() {
         bus.$emit('active', this.contact);
+        this.$nextTick(function () {
+          let container = document.getElementsByClassName("history")[0];
+          container.scrollTop = container.scrollHeight;
+        });
       }
     }
   }

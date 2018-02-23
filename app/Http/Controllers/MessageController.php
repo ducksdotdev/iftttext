@@ -42,6 +42,5 @@ class MessageController extends Controller
             'value2' => $request->text
         ]]);
         $response = $client->send($response);
-        Log::info($response);
     }
 }
