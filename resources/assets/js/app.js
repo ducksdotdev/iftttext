@@ -1,4 +1,5 @@
 import bus from "./bus";
+import Contact from "./components/Contact";
 import ContactList from "./components/ContactList";
 
 window.Vue = require('vue');
@@ -10,12 +11,12 @@ const socket = io(socket_host + ":" + socket_port);
 
 const app = new Vue({
   el: '#app',
-  components: {ContactList},
+  components: {ContactList, Contact},
   data: {
     message: '',
     active: null,
     messages: [],
-    messageHistory: BladeData.messages,
+    messageHistory: BladeData.messages
   },
   mounted() {
     bus.$on('active', this.setActive);
@@ -23,6 +24,9 @@ const app = new Vue({
       socket.on('private-chat-channel', function (event) {
         const data = event.data;
         this.messageHistory.push(data);
+        this.messageHistory = this.messageHistory.filter(function (message) {
+          return !(message.temp && message.text === data.text && message.phone === data.phone);
+        });
         if (this.active && this.active.id === data.contact_id) {
           this.messages.push(data);
           this.$nextTick(function () {
@@ -39,10 +43,22 @@ const app = new Vue({
   },
   methods: {
     send: function () {
-      if (this.message) {
-        this.$http.post('/api/send', {
+      if (this.message.length > 0) {
+        let message = {
           text: this.message,
-          number: this.active.phone
+          phone: this.active.phone
+        };
+        // this.$http.post('/api/send', message);
+        message = Object.assign(message, {
+          contact_id: this.active.id,
+          my_message: true,
+          temp: true
+        });
+        this.messages.push(message);
+        this.messageHistory.push(message);
+        this.$nextTick(function () {
+          let container = document.getElementsByClassName("history")[0];
+          container.scrollTop = container.scrollHeight;
         });
       }
       this.message = '';

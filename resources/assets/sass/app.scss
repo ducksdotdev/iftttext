@@ -53,7 +53,7 @@ body {
   max-height: 100vh;
   color: rgba(255, 255, 255, .95);
   width: calc(100% - #{$contact-list-width});
-  .contact{
+  .contact {
     cursor: default;
     background: #424242;
   }
@@ -63,9 +63,18 @@ body {
     height: calc(100% - 60px - 75px);
     overflow-y: scroll;
     .message {
+      position: relative;
       clear: both;
       max-width: 66%;
       float: left;
+      .sending {
+        color: #FB8C00;
+        font-weight: bold;
+        font-size: .875rem;
+        position: absolute;
+        left: -80px;
+        top: calc(50% - 1rem);
+      }
       .time {
         margin-bottom: 15px;
         color: rgba(255, 255, 255, .8);

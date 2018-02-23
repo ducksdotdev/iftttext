@@ -14,6 +14,6 @@ class PageController extends Controller
             'messages' => Message::all(),
             'contacts' => Contact::all()
         ]);
-        return view('welcome');
+        return view('chat');
     }
 }
