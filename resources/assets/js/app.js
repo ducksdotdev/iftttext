@@ -24,11 +24,11 @@ const app = new Vue({
       socket.on('private-chat-channel', function (event) {
         const data = event.data;
         this.messageHistory.push(data);
-        this.messageHistory = this.messageHistory.filter(function (message) {
-          return !(message.temp && message.text === data.text && message.phone === data.phone);
-        });
         if (this.active && this.active.id === data.contact_id) {
           this.messages.push(data);
+          this.messages = this.messages.filter(function (message) {
+            return !(message.temp && message.text === data.text);
+          });
           this.$nextTick(function () {
             let container = document.getElementsByClassName("history")[0];
             container.scrollTop = container.scrollHeight;
@@ -48,14 +48,13 @@ const app = new Vue({
           text: this.message,
           phone: this.active.phone
         };
-        // this.$http.post('/api/send', message);
+        this.$http.post('/api/send', message);
         message = Object.assign(message, {
           contact_id: this.active.id,
           my_message: true,
           temp: true
         });
         this.messages.push(message);
-        this.messageHistory.push(message);
         this.$nextTick(function () {
           let container = document.getElementsByClassName("history")[0];
           container.scrollTop = container.scrollHeight;
