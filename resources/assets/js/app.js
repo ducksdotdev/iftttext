@@ -1,6 +1,7 @@
 import bus from "./bus";
 import Contact from "./components/Contact";
 import ContactList from "./components/ContactList";
+import MessageHistory from "./components/MessageHistory";
 
 window.Vue = require('vue');
 Vue.use(require('vue-resource'));
@@ -11,11 +12,10 @@ const socket = io(socket_host + ":" + socket_port);
 
 const app = new Vue({
   el: '#app',
-  components: {ContactList, Contact},
+  components: {ContactList, Contact, MessageHistory},
   data: {
     message: '',
     active: null,
-    messages: [],
     messageHistory: BladeData.messages
   },
   mounted() {
@@ -24,11 +24,11 @@ const app = new Vue({
       socket.on('private-chat-channel', function (event) {
         const data = event.data;
         this.messageHistory.push(data);
+        this.messageHistory = this.messageHistory.filter(function (message) {
+          return !(message.temp && message.text === data.text && message.contact_id === data.contact_id);
+        });
+
         if (this.active && this.active.id === data.contact_id) {
-          this.messages.push(data);
-          this.messages = this.messages.filter(function (message) {
-            return !(message.temp && message.text === data.text);
-          });
           this.$nextTick(function () {
             let container = document.getElementsByClassName("history")[0];
             container.scrollTop = container.scrollHeight;
@@ -40,6 +40,13 @@ const app = new Vue({
         bus.$emit('newContact', contact);
       }.bind(this));
     });
+  },
+  computed: {
+    messages: function () {
+      return this.messageHistory.filter(function (message) {
+        return message.contact_id === this.active.id;
+      }.bind(this));
+    }
   },
   methods: {
     send: function () {
@@ -54,7 +61,7 @@ const app = new Vue({
           my_message: true,
           temp: true
         });
-        this.messages.push(message);
+        this.messageHistory.push(message);
         this.$nextTick(function () {
           let container = document.getElementsByClassName("history")[0];
           container.scrollTop = container.scrollHeight;
@@ -64,9 +71,6 @@ const app = new Vue({
     },
     setActive(contact) {
       this.active = contact;
-      this.messages = this.messageHistory.filter(function (message) {
-        return message.contact_id === contact.id;
-      });
     }
   }
 });

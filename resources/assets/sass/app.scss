@@ -37,7 +37,6 @@ body {
   color: rgba(255, 255, 255, .9);
   height: 75px;
   &.active { background: $blue; color: white; }
-  & + .contact { border-top: 1px solid rgba(0, 0, 0, 0.08);}
   span { display: block;
     &.name {
       font-size: 1rem;
@@ -59,7 +58,6 @@ body {
   }
   .history {
     padding: 30px 30px 20px;
-    border-bottom: 2px solid white;
     height: calc(100% - 60px - 75px);
     overflow-y: scroll;
     .message {
@@ -111,7 +109,7 @@ body {
       font-size: 1rem;
       resize: none;
       height: 75px;
-      background: #E0E0E;
+      background: #E0E0E0;
     }
     button {
       position: absolute;
