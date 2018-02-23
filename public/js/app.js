@@ -11070,10 +11070,7 @@ var app = new Vue({
         this.messageHistory.push(data);
         if (this.active && this.active.id === data.contact_id) {
           this.messages.push(data);
-          this.$nextTick(function () {
-            var container = this.$el.querySelector(".chat-history");
-            container.scrollTop = container.scrollHeight;
-          });
+          this.scrollBottom();
         }
       }.bind(this));
       socket.on('private-contact-channel', function (event) {
@@ -11087,7 +11084,7 @@ var app = new Vue({
     send: function send() {
       this.$http.post('/api/send', {
         text: this.message,
-        phone: this.active.phone
+        number: this.active.phone
       });
       this.message = '';
     },
@@ -11096,6 +11093,12 @@ var app = new Vue({
       this.messages = this.messageHistory.filter(function (message) {
         return message.contact_id === contact.id;
       });
+      this.scrollBottom();
+    },
+    scrollBottom: function scrollBottom() {
+      console.log("Trying to scroll");
+      var container = document.getElementsByClassName("chat-history")[0];
+      container.scrollTop = container.scrollHeight;
     }
   }
 });
@@ -11762,8 +11765,9 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "contact-list" },
-    _vm._l(_vm.contacts, function(contact) {
+    _vm._l(_vm.contacts, function(contact, index) {
       return _c("contact", {
+        key: index,
         class: { active: _vm.isActive(contact) },
         attrs: { contact: contact },
         on: {

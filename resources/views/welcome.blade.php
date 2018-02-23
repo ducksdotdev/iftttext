@@ -11,8 +11,11 @@
 <div class="wrapper" id="app">
     <contact-list :active="active"></contact-list>
     <div class="chat" v-if="active">
-        <div class="chat-with">@{{ active.name ? active.name : 'Unknown Number' }} (@{{ active.phone }})</div>
-        <div class="chat-history">
+        <div class="contact">
+            <span class="name">@{{ active.name ? active.name : "Unknown Number"}}</span>
+            <span class="phone">@{{ active.phone }}</span>
+        </div>
+        <div class="history">
             <div class="message" v-for="message in messages" v-bind:class="{'my-message': message.my_message}">
                 <div class="time">@{{ message.created_at }}</div>
                 <div class="text">

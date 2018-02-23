@@ -1,6 +1,6 @@
 <template>
   <div class="contact-list">
-    <contact v-for="contact in contacts" :contact="contact" v-bind:class="{active: isActive(contact)}" @click="setActive(contact)"/>
+    <contact v-for="(contact, index) in contacts" :key="index" :contact="contact" v-bind:class="{active: isActive(contact)}" @click="setActive(contact)"/>
   </div>
 </template>
 

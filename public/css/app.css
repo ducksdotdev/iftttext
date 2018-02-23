@@ -17,6 +17,7 @@ body {
   font: 16px "Lato", Arial, sans-serif;
   color: white;
   overflow: hidden;
+  background: #616161;
 }
 
 .wrapper {
@@ -26,96 +27,89 @@ body {
 }
 
 .contact-list {
-  background: #444753;
+  background: #212121;
   width: 260px;
   float: left;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
-.contact-list .contact {
+.contact {
   cursor: pointer;
   padding: 20px;
   -webkit-transition-duration: 400ms;
           transition-duration: 400ms;
+  color: rgba(255, 255, 255, 0.9);
+  height: 75px;
 }
 
-.contact-list .contact.active {
-  background: #94C2ED;
-}
-
-.contact-list .contact.active span.phone {
+.contact.active {
+  background: #0277BD;
   color: white;
 }
 
-.contact-list .contact + .contact {
+.contact + .contact {
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.contact-list .contact span {
+.contact span {
   display: block;
 }
 
-.contact-list .contact span.name {
+.contact span.name {
   font-size: 1rem;
   font-weight: bold;
 }
 
-.contact-list .contact span.phone {
-  color: #92959E;
+.contact span.phone {
   font-size: .875rem;
 }
 
 .chat {
   max-height: 100vh;
-  background: #F2F5F8;
-  color: #434651;
+  color: rgba(255, 255, 255, 0.95);
   width: calc(100% - 260px);
 }
 
-.chat .chat-with {
-  height: 60px;
-  padding: 20px 30px;
-  border-bottom: 2px solid white;
-  margin-top: 6px;
-  font-weight: bold;
-  font-size: 16px;
+.chat .contact {
+  cursor: none;
+  background: #424242;
 }
 
-.chat .chat-history {
+.chat .history {
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
-  height: calc(100% - 60px - 160px);
+  height: calc(100% - 60px - 75px);
   overflow-y: scroll;
 }
 
-.chat .chat-history .message {
+.chat .history .message {
   clear: both;
   max-width: 66%;
   float: left;
 }
 
-.chat .chat-history .message .time {
+.chat .history .message .time {
   margin-bottom: 15px;
-  color: #a8aab1;
+  color: rgba(255, 255, 255, 0.8);
   padding-left: 6px;
   font-size: .5rem;
 }
 
-.chat .chat-history .message.my-message {
+.chat .history .message.my-message {
   float: right;
 }
 
-.chat .chat-history .message.my-message .time,
-.chat .chat-history .message.my-message .text {
+.chat .history .message.my-message .time,
+.chat .history .message.my-message .text {
   text-align: right;
 }
 
-.chat .chat-history .message.my-message .text {
-  background: #94C2ED;
+.chat .history .message.my-message .text {
+  background: #0277BD;
 }
 
-.chat .chat-history .message .text {
+.chat .history .message .text {
   color: white;
   padding: 18px 20px;
   line-height: 26px;
@@ -124,12 +118,11 @@ body {
   margin-bottom: 30px;
   width: auto;
   position: relative;
-  background: #86BB71;
+  background: #388E3C;
 }
 
 .chat .chat-message {
-  padding: 30px;
-  height: 160px;
+  position: relative;
 }
 
 .chat .chat-message textarea {
@@ -138,62 +131,30 @@ body {
   padding: 10px 20px;
   font-family: "Lato", Arial, sans-serif;
   font-size: 1rem;
-  margin-bottom: 10px;
-  border-radius: 5px;
   resize: none;
-  height: calc(100% - 30px);
-}
-
-.chat .chat-message .fa-file-o,
-.chat .chat-message .fa-file-image-o {
-  font-size: 16px;
-  color: gray;
-  cursor: pointer;
+  height: 75px;
+  background: #E0E0E;
 }
 
 .chat .chat-message button {
-  float: right;
-  color: #94C2ED;
-  font-size: 16px;
+  position: absolute;
+  top: 18px;
+  background: transparent;
+  right: 20px;
+  color: #FB8C00;
+  border-radius: 5px;
+  font-size: 1rem;
+  padding: 8px 10px;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
   font-weight: bold;
-  background: #F2F5F8;
+  -webkit-transition-duration: 300ms;
+          transition-duration: 300ms;
 }
 
 .chat .chat-message button:hover {
-  color: #75b1e8;
-}
-
-.online,
-.offline,
-.me {
-  margin-right: 3px;
-  font-size: 10px;
-}
-
-.online {
-  color: #86BB71;
-}
-
-.offline {
-  color: #E38968;
-}
-
-.me {
-  color: #94C2ED;
-}
-
-.align-left {
-  text-align: left;
-}
-
-.align-right {
-  text-align: right;
-}
-
-.float-right {
-  float: right;
+  background: rgba(0, 0, 0, 0.05);
+  color: #FB8C00;
 }
 
