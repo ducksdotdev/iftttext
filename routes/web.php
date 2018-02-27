@@ -11,5 +11,10 @@
 |
 */
 
-Route::get('/', 'PageController@index')->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/', 'PageController@index')->name('home');
+    Route::get('/settings', 'PageController@settings')->name('settings');
+});
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+Auth::routes();

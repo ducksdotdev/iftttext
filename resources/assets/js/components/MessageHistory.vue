@@ -1,6 +1,6 @@
 <template>
   <div class="history">
-    <message v-for="message in messages" :message="message"></message>
+    <message v-for="(message, index) in messages" :key="index" :message="message"></message>
   </div>
 </template>
 

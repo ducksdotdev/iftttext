@@ -20,7 +20,9 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "forever-monitor": "^1.7.1",
         "ioredis": "^3.2.2",
+        "moment": "^2.20.1",
         "socket.io": "^2.0.4",
         "vue-resource": "^1.4.0"
     }

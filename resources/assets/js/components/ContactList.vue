@@ -1,5 +1,6 @@
 <template>
   <div class="contact-list">
+    <div class="contact compose" v-on:click="compose">Compose New</div>
     <contact v-for="(contact, index) in contacts" :key="index" :contact="contact" v-bind:class="{active: isActive(contact)}" @click="setActive(contact)"/>
   </div>
 </template>
@@ -35,7 +36,8 @@
         if (check.length === 0) {
           this.contacts.push(contact);
         }
-      }
+      },
+      compose(){}
     }
   }
 </script>

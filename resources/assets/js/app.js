@@ -2,6 +2,7 @@ import bus from "./bus";
 import Contact from "./components/Contact";
 import ContactList from "./components/ContactList";
 import MessageHistory from "./components/MessageHistory";
+import moment from "moment";
 
 window.Vue = require('vue');
 Vue.use(require('vue-resource'));
@@ -9,6 +10,20 @@ Vue.use(require('vue-resource'));
 const socket_port = 3000;
 const socket_host = 'http://127.0.0.1';
 const socket = io(socket_host + ":" + socket_port);
+
+if ('serviceWorker' in navigator && 'PushManager' in window) {
+  console.log('Service Worker and Push is supported');
+  navigator.serviceWorker.register('js/sw.js')
+    .then(function(swReg) {
+      console.log('Service Worker is registered', swReg);
+    })
+    .catch(function(error) {
+      console.error('Service Worker Error', error);
+    });
+} else {
+  console.warn('Push messaging is not supported');
+}
+
 
 const app = new Vue({
   el: '#app',
@@ -45,7 +60,10 @@ const app = new Vue({
     messages: function () {
       return this.messageHistory.filter(function (message) {
         return message.contact_id === this.active.id;
-      }.bind(this));
+      }.bind(this))
+        .sort(function (a, b) {
+          return moment(a.occurred_at).diff(b.occurred_at);
+        });
     }
   },
   methods: {
@@ -59,7 +77,8 @@ const app = new Vue({
         message = Object.assign(message, {
           contact_id: this.active.id,
           my_message: true,
-          temp: true
+          temp: true,
+          occurred_at: moment().format()
         });
         this.messageHistory.push(message);
         this.$nextTick(function () {
@@ -71,6 +90,6 @@ const app = new Vue({
     },
     setActive(contact) {
       this.active = contact;
-    }
+    },
   }
 });

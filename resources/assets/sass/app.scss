@@ -3,6 +3,7 @@ $green: #388E3C;
 $blue: #0277BD;
 $orange: #FB8C00;
 $gray: #616161;
+$red: red;
 $contact-list-width: 260px;
 
 *, *:before, *:after {
@@ -18,9 +19,19 @@ body {
   font: 16px "Lato", Arial, sans-serif;
   color: white;
   overflow: hidden;
-  background: $gray;
+  background: white;
 }
-.wrapper {
+wrapper { display: flex; }
+nav {
+  height: 100vh;
+  width: 75px;
+  background: $blue;
+  a { color: rgba(255, 255, 255, .8); font-size: 2.25rem; display: flex; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0;
+    transition-duration: 300ms;
+    &:hover { background: $orange; }
+  }
+}
+#app {
   display: flex;
 }
 .contact-list {
@@ -36,6 +47,16 @@ body {
   transition-duration: 400ms;
   color: rgba(255, 255, 255, .9);
   height: 75px;
+  &.compose {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0D47A1;
+    border: none;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    font-weight: bold;
+  }
   &.active { background: $blue; color: white; }
   span { display: block;
     &.name {
@@ -58,7 +79,7 @@ body {
   }
   .history {
     padding: 30px 30px 20px;
-    height: calc(100% - 60px - 75px);
+    height: calc(100% - 60px - 125px);
     overflow-y: scroll;
     .message {
       position: relative;
@@ -81,7 +102,7 @@ body {
       }
       &.my-message {
         float: right;
-        .time, .text { text-align: right; }
+        .time { text-align: right; }
         .text {
           background: $blue;
         }
@@ -108,27 +129,81 @@ body {
       font-family: "Lato", Arial, sans-serif;
       font-size: 1rem;
       resize: none;
-      height: 75px;
+      height: 125px;
       background: #E0E0E0;
     }
-    button {
-      position: absolute;
-      top: calc(50% - 27.5px);
-      right: 20px;
-      background: transparent;
-      color: $orange;
-      border-radius: 5px;
-      font-size: 1rem;
-      padding: 8px 10px;
-      text-transform: uppercase;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      transition-duration: 300ms;
-      &:hover {
-        background: rgba(0, 0, 0, .05);
-        color: $orange;
-      }
-    }
+    button { position: absolute; top: calc(50% - 1rem); right: 20px; }
   }
+}
+button {
+  font-size: 1rem;
+  background: $orange;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 10px;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition-duration: 300ms;
+  letter-spacing: 1px;
+  font-family: "Lato", sans-serif;
+  &:hover {
+    color: $orange;
+    background: transparent;
+  }
+}
+#login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgba(0, 0, 0, .8);
+  h2, input { font-family: "Lato", sans-serif; letter-spacing: 1px; }
+  form {
+    width: 300px;
+    background: rgba(0, 0, 0, .05);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  h2 {
+    background: $blue;
+    display: block;
+    padding: 15px;
+    margin: 0;
+    color: white;
+  }
+  .form-group { margin: 15px; }
+  input[type="checkbox"] { margin: 0; }
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  a, label { font-size: .725rem; text-transform: lowercase; font-weight: bold; }
+  label { padding: 5px; }
+  .actions {
+    label { display: flex; align-items: center; }
+    span { padding: 0 5px; }
+  }
+  a { text-decoration: none; color: transparentize($gray, .6); display: block; text-align: center; transition-duration: 300ms;
+    &:hover { color: $gray; }
+  }
+  .sign-up { margin: 30px; color: $blue;
+    &:hover { color: $orange; }
+  }
+}
+input:not([type="checkbox"]) {
+  background: #E0E0E0;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+}
+.text-right { text-align: right; }
+span.invalid-feedback {
+  color: $red;
+  line-height: 1.5rem;
+  font-size: .8rem;
 }
