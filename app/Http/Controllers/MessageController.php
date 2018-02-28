@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Events\ChatMessageReceived;
 use App\Models\Contact;
 use App\Models\Message;
+use App\Models\User;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Filesystem\Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -20,7 +22,9 @@ class MessageController extends Controller
      */
     public function receive(Request $request)
     {
-        $contact = Contact::firstOrNew(['phone' => $request->get('phone')]);
+        $user = User::where(['api_key' => $request->get('api_key')])->first();
+        Log::info($user);
+        $contact = Contact::firstOrNew(['phone' => $request->get('phone'), 'user_id' => $user->id]);
         if ($request->has('name') && (!$contact->name || $request->name != $contact->name)) $contact->name = $request->get('name');
         $contact->save();
 
@@ -41,10 +45,9 @@ class MessageController extends Controller
         $client = new Client;
         $event = 'sms_received';
         $url = "https://maker.ifttt.com/trigger/{$event}/with/key/emgH7lOiSeV4j-oTt2Yupu-NkQR_mTPN4yBxITXs9UT";
-        $response = $client->createRequest("POST", $url, ['body' => [
+        $client->post($url, [RequestOptions::JSON => [
             'value1' => $request->phone,
             'value2' => $request->text
         ]]);
-        $response = $client->send($response);
     }
 }

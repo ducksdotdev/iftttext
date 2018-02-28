@@ -9,13 +9,17 @@
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
 </head>
 <body>
-<wrapper>
-    <nav>
-        <a href="{{ route('home') }}"><i class="ion ion-chatbubble"></i></a>
-        <a href="{{ route('settings') }}"><i class="ion ion-gear-a"></i></a>
-    </nav>
+@auth
+    <div class="wrapper" id="app">
+        <nav>
+            <a href="{{ route('home') }}"><i class="ion ion-chatbubble"></i></a>
+            <a href="{{ route('settings') }}"><i class="ion ion-gear-a"></i></a>
+        </nav>
+        @yield('content')
+    </div>
+@else
     @yield('content')
-</wrapper>
+@endauth
 <script src="{{ asset('plugins/socket.io/socket.io.min.js') }}"></script>
 <script src="{{ mix('/js/app.js') }}"></script>
 </body>

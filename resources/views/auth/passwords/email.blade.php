@@ -21,7 +21,7 @@
                 @endif
             </div>
             <div class="form-group actions">
-                <a href="{{ route('home') }}">Back</a>
+                <a href="{{ route('home') }}">Back to login</a>
                 <button type="submit" class="btn btn-primary">Reset</button>
             </div>
         </form>

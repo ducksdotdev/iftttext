@@ -13,7 +13,7 @@
     components: {Contact},
     data: function () {
       return {
-        contacts: BladeData.contacts,
+        contacts: BladeData.contacts
       }
     },
     props: {

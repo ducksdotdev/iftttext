@@ -13,5 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('receive', 'MessageController@receive');
+Route::middleware('auth.token')->group(function () {
+    Route::post('receive', 'MessageController@receive');
+});
 Route::post('send', 'MessageController@send');

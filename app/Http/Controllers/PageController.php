@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
-use App\Models\Message;
-use App\Models\User;
 use JavaScript;
 
 class PageController extends Controller

@@ -7,7 +7,7 @@
             @csrf
             <div class="form-group">
                 <label>Email
-                    <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                    <input id="email" type="email" placeholder="email@example.com" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
                 </label>
                 @if ($errors->has('email'))
                     <span class="invalid-feedback"><strong>{{ $errors->first('email') }}</strong></span>
@@ -15,7 +15,7 @@
             </div>
             <div class="form-group">
                 <label>Phone
-                    <input id="phone" type="tel" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required>
+                    <input id="phone" placeholder="12225550123" type="tel" class="form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}" required>
                 </label>
                 @if ($errors->has('phone'))
                     <span class="invalid-feedback"><strong>{{ $errors->first('phone') }}</strong></span>
@@ -24,7 +24,7 @@
             <div class="form-group">
                 <div class="col-md-6">
                     <label>Password
-                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                        <input id="password" placeholder="********" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                     </label>
                     @if ($errors->has('password'))
                         <span class="invalid-feedback"><strong>{{ $errors->first('password') }}</strong></span>
@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label>Confirm Password
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    <input id="password-confirm" placeholder="********" type="password" class="form-control" name="password_confirmation" required>
                 </label>
             </div>
             <div class="form-group actions">

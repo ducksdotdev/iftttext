@@ -3,7 +3,7 @@ $green: #388E3C;
 $blue: #0277BD;
 $orange: #FB8C00;
 $gray: #616161;
-$red: red;
+$red: #F44336;
 $contact-list-width: 260px;
 
 *, *:before, *:after {
@@ -21,7 +21,7 @@ body {
   overflow: hidden;
   background: white;
 }
-wrapper { display: flex; }
+.wrapper { display: flex; }
 nav {
   height: 100vh;
   width: 75px;
@@ -30,9 +30,6 @@ nav {
     transition-duration: 300ms;
     &:hover { background: $orange; }
   }
-}
-#app {
-  display: flex;
 }
 .contact-list {
   background: #212121;
@@ -73,6 +70,7 @@ nav {
   max-height: 100vh;
   color: rgba(255, 255, 255, .95);
   width: calc(100% - #{$contact-list-width});
+  background: $gray;
   .contact {
     cursor: default;
     background: #424242;
@@ -132,7 +130,11 @@ nav {
       height: 125px;
       background: #E0E0E0;
     }
-    button { position: absolute; top: calc(50% - 1rem); right: 20px; }
+    button {
+      bottom: 0;
+      right: 0;
+      margin: 50px 20px;
+    }
   }
 }
 button {
